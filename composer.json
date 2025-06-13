@@ -1,0 +1,32 @@
+{
+  "name": "branzia/blueprint",
+  "description": "Branzia Blueprint package – the foundational layer for Branzia's Laravel packages",
+  "type": "library",
+  "license": "MIT",
+  "require": {
+      "php": "^8.2",
+      "filament/filament": "3.3"
+  },
+  "authors": [
+        {
+            "name": "Visvanathan",
+            "email": "visvanathan.tech@gmail.com"
+        }
+    ],
+  "minimum-stability": "dev",  
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Branzia\\Blueprint\\": "src/"
+    }
+  },
+  "extra": {
+      "laravel": {
+          "providers": [
+              "Branzia\\Blueprint\\BlueprintServiceProvider"
+          ],
+          "aliases": {}
+      }
+  }
+
+}
