@@ -79,5 +79,6 @@ abstract class BranziaServiceProvider extends ServiceProvider
         if (file_exists($configFile)) {
             $this->mergeConfigFrom($configFile, "{$module}-config");
         }
+        $this->app->register(BranziaPanelProvider::class);
     }
 }
