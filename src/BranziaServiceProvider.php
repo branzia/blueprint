@@ -23,7 +23,7 @@ abstract class BranziaServiceProvider extends ServiceProvider
         $this->publishes(["{$path}/resources/lang" => resource_path("lang/vendor/{$module}"),], "{$module}-lang");
 
         // Load Migrations
-        $migrationsPath = "{$path}/database/migrations";
+        $migrationsPath = "{$path}/src/Database/Migrations";
         if (is_dir($migrationsPath)) {
             $this->loadMigrationsFrom($migrationsPath);
         }
