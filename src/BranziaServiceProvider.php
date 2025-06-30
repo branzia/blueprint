@@ -5,7 +5,8 @@ namespace Branzia\Blueprint;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-
+use Filament\Forms\Form;
+use Branzia\Bootstrap\Form\FormExtensionManager;
 abstract class BranziaServiceProvider extends ServiceProvider
 {
     abstract public function moduleName(): string;
@@ -52,22 +53,22 @@ abstract class BranziaServiceProvider extends ServiceProvider
         }
 
         // Load Views (fallback first)
-        $this->loadViewsFrom([
-            resource_path("views/{$module}"),
-            "{$path}/resources/views"
-        ], $module);
+        $this->loadViewsFrom([resource_path("views/{$module}"),"{$path}/resources/views"], $module);
 
         // Publish Views
-        $this->publishes([
-            "{$path}/resources/views" => resource_path("views/{$module}"),
-        ], "{$module}-views");
+        $this->publishes(["{$path}/resources/views" => resource_path("views/{$module}")], "{$module}-views");
 
         // Publish Config
         $configFile = "{$path}/config/{$module}.php";
         if (file_exists($configFile)) {
-            $this->publishes([
-                $configFile => config_path("branzia/{$module}.php"),
-            ], "{$module}-config");
+            $this->publishes([$configFile => config_path("branzia/{$module}.php")], "{$module}-config");
+        }
+
+        if (!method_exists(Form::class, 'withAdditionalField')) {
+            Form::macro('withAdditionalField', function (array $baseSchema, string $resourceClass): array {
+                /** @var Form $this */
+                return FormExtensionManager::apply($baseSchema, $resourceClass);
+            });
         }
     }
 
@@ -81,4 +82,6 @@ abstract class BranziaServiceProvider extends ServiceProvider
         }
         $this->app->register(BranziaPanelProvider::class);
     }
+
+    
 }
