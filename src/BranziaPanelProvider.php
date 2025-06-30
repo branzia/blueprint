@@ -20,6 +20,7 @@ use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 
+use Branzia\Admin\Filament\Pages\Auth\Login;
 class BranziaPanelProvider extends PanelProvider
 {
     public function panel(Panel $panel): Panel
@@ -27,7 +28,7 @@ class BranziaPanelProvider extends PanelProvider
         $discoveryPaths = $this->collectBranziaDiscoveryPaths();
 
         $panel->default()
-            ->login()
+            ->login(Login::class)
             ->colors(['primary' => Color::Amber])
             ->authGuard('admin')
             ->id('admin')
