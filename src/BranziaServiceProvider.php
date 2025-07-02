@@ -11,7 +11,7 @@ abstract class BranziaServiceProvider extends ServiceProvider
 {
     abstract public function moduleName(): string;
     abstract public function moduleRootPath(): string;
-
+    
     public function boot(): void
     {
         $module = strtolower($this->moduleName());
@@ -81,6 +81,27 @@ abstract class BranziaServiceProvider extends ServiceProvider
             $this->mergeConfigFrom($configFile, "{$module}-config");
         }
         $this->app->register(BranziaPanelProvider::class);
+    }
+
+
+    public function filamentDiscoveryPaths(): array
+    {
+        $module = $this->moduleName();
+        $path = $this->moduleRootPath();
+        return [
+            'resources' => [
+                ['path' => $path.'/src/Filament/Resources', 'namespace' => "Branzia\\$module\\Filament\\Resources"],
+            ],
+            'pages' => [
+                ['path' => $path.'/src/Filament/Pages', 'namespace' => "Branzia\\$module\\Filament\\Pages"],
+            ],
+            'clusters' => [
+                ['path' => $path.'/src/Filament/Clusters', 'namespace' => "Branzia\\$module\\Filament\\Clusters"],
+            ],
+            'widgets' => [
+                ['path' => $path.'/src/Filament/Widgets', 'namespace' => "Branzia\\$module\\Filament\\Widgets"],
+            ],
+        ];
     }
 
     

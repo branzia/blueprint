@@ -51,32 +51,6 @@ class BranziaPanelProvider extends PanelProvider
                 DispatchServingFilamentEvent::class,
             ])
             ->authMiddleware([Authenticate::class]);
-            /*
-            foreach ($discoveryPaths['resources'] as $path) {
-                $panel->discoverResources(
-                in: $path['path'],
-                for: $path['namespace']
-                );
-            }
-            foreach ($discoveryPaths['pages'] as $path) {
-                $panel->discoverPages(
-                    in: $path['path'],
-                    for: $path['namespace']
-                );
-            }
-            foreach ($discoveryPaths['clusters'] as $path) {
-                $panel->discoverClusters(
-                    in: $path['path'],
-                    for: $path['namespace']
-                );
-            }
-            foreach ($discoveryPaths['widgets'] as $path) {
-                $panel->discoverWidgets(
-                    in: $path['path'],
-                    for: $path['namespace']
-                );
-            }
-            */
             /**
              *  Self-contained discovery
              */
@@ -86,7 +60,6 @@ class BranziaPanelProvider extends PanelProvider
             $this->registerDiscovery($panel, $discoveryPaths['widgets'], 'discoverWidgets');                
         return $panel;
     }
-
     protected function collectBranziaDiscoveryPaths(): array
     {
         $result = [
@@ -95,16 +68,14 @@ class BranziaPanelProvider extends PanelProvider
             'clusters' => [],
             'widgets' => [],
         ];
-
         foreach (app()->getProviders(ServiceProvider::class) as $provider) {
             if ($provider instanceof ProvidesFilamentDiscovery) {
-                $paths = $provider::filamentDiscoveryPaths();
+                $paths = $provider->filamentDiscoveryPaths();
                 foreach ($paths as $key => $entries) {
                     $result[$key] = array_merge($result[$key], $entries);
                 }
             }
         }
-
         return $result;
     }
     protected function registerDiscovery(Panel $panel, array $paths, string $method): void
@@ -115,6 +86,5 @@ class BranziaPanelProvider extends PanelProvider
                 for: $path['namespace']
             );
         }
-    }
-
+    }  
 }
