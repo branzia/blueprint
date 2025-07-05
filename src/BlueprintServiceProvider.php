@@ -24,6 +24,9 @@ class BlueprintServiceProvider extends BranziaServiceProvider
     public function register(): void
     {
         parent::register();
+        $this->commands([
+            \Branzia\Blueprint\Console\InstallBranzia::class,
+        ]);
     }
 }
 
