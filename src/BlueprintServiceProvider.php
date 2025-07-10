@@ -3,10 +3,9 @@
 namespace Branzia\Blueprint;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider;
+use Branzia\Blueprint\Contracts\ProvidesFilamentDiscovery;
 
-
-
-class BlueprintServiceProvider extends BranziaServiceProvider
+class BlueprintServiceProvider extends BranziaServiceProvider implements ProvidesFilamentDiscovery
 {
      public function moduleName(): string
     {
