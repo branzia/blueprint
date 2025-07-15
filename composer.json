@@ -4,8 +4,7 @@
   "type": "library",
   "license": "MIT",
   "require": {
-      "php": "^8.2",
-      "filament/filament": "3.3"
+      "php": "^8.2"
   },
   "authors": [
         {
