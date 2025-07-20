@@ -19,7 +19,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
-
+use Branzia\Settings\SettingsPlugin;
 use Branzia\Admin\Filament\Pages\Auth\Login;
 class BranziaPanelProvider extends PanelProvider
 {
@@ -38,6 +38,9 @@ class BranziaPanelProvider extends PanelProvider
             ])
             ->widgets([
                 Widgets\AccountWidget::class,
+            ])
+            ->plugins([
+                SettingsPlugin::make()
             ])
             ->middleware([
                 EncryptCookies::class,
