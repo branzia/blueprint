@@ -20,6 +20,26 @@ abstract class BranziaServiceProvider extends ServiceProvider
         // Load Translations
         $this->loadTranslationsFrom("{$path}/resources/lang", $module);
         $this->loadJsonTranslationsFrom("{$path}/resources/lang");
+
+        // Load Views (fallback first)
+        $resourceViewPath = resource_path("views/{$module}");
+        $packageViewPath = "{$path}/resources/views";
+
+        $paths = [];
+
+        if (is_dir($resourceViewPath)) {
+            $paths[] = $resourceViewPath;
+        }
+
+        if (is_dir($packageViewPath)) {
+            $paths[] = $packageViewPath;
+        }
+
+        if (!empty($paths)) {
+            $this->loadViewsFrom($paths, "branzia-{$module}");
+        }
+
+
         // Publish Translations
         $this->publishes(["{$path}/resources/lang" => resource_path("lang/vendor/{$module}"),], "{$module}-lang");
 
@@ -52,9 +72,7 @@ abstract class BranziaServiceProvider extends ServiceProvider
             }
         }
 
-        // Load Views (fallback first)
-        $this->loadViewsFrom([resource_path("views/{$module}"),"{$path}/resources/views"], $module);
-
+  
         // Publish Views
         $this->publishes(["{$path}/resources/views" => resource_path("views/{$module}")], "{$module}-views");
 
